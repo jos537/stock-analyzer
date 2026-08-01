@@ -1,0 +1,25 @@
+{
+  "trained_at": "2026-08-01T19:09:43.864498+00:00",
+  "horizon_days": 5,
+  "feature_columns": [
+    "RET_1D",
+    "RET_5D",
+    "RET_10D",
+    "RET_20D",
+    "RSI14",
+    "MACD",
+    "MACD_SIGNAL",
+    "MACD_HIST",
+    "PRICE_TO_SMA20",
+    "PRICE_TO_SMA50",
+    "PRICE_TO_SMA200",
+    "BB_PCTB",
+    "VOLATILITY_20D",
+    "VOL_RATIO"
+  ],
+  "training_universe_size": 40,
+  "train_rows": 33760,
+  "test_rows": 8480,
+  "test_accuracy": 0.4854,
+  "test_roc_auc": 0.4751
+}
