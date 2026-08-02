@@ -1,6 +1,7 @@
 {
-  "trained_at": "2026-08-01T19:09:43.864498+00:00",
+  "trained_at": "2026-08-02T13:52:27.315558+00:00",
   "horizon_days": 5,
+  "label_move_threshold": 0.01,
   "feature_columns": [
     "RET_1D",
     "RET_5D",
@@ -15,11 +16,20 @@
     "PRICE_TO_SMA200",
     "BB_PCTB",
     "VOLATILITY_20D",
-    "VOL_RATIO"
+    "VOL_RATIO",
+    "MKT_RET_5D",
+    "MKT_RET_20D",
+    "MKT_ABOVE_SMA50"
   ],
-  "training_universe_size": 40,
-  "train_rows": 33760,
-  "test_rows": 8480,
-  "test_accuracy": 0.4854,
-  "test_roc_auc": 0.4751
+  "training_universe_size": 74,
+  "train_rows": 36108,
+  "calib_rows": 12036,
+  "test_rows": 12036,
+  "test_accuracy": 0.5217,
+  "test_roc_auc": 0.4791,
+  "test_brier_score": 0.2524,
+  "diagnostic_cv_mean_accuracy": 0.5032,
+  "diagnostic_cv_std_accuracy": 0.026,
+  "diagnostic_cv_mean_auc": 0.5078,
+  "diagnostic_cv_std_auc": 0.0326
 }

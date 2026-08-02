@@ -89,7 +89,15 @@ else:
         with st.expander("על המודל"):
             st.write(f"דיוק על נתוני בדיקה היסטוריים: {meta['test_accuracy'] * 100:.1f}%")
             st.write(f"ROC-AUC: {meta['test_roc_auc']:.2f}")
+            if "test_brier_score" in meta:
+                st.write(f"Brier score (איכות כיול ההסתברות): {meta['test_brier_score']:.3f}")
+            if "diagnostic_cv_mean_accuracy" in meta:
+                st.write(
+                    f"דיוק ממוצע על פני {5} חלונות זמן שונים: "
+                    f"{meta['diagnostic_cv_mean_accuracy'] * 100:.1f}% "
+                    f"(± {meta['diagnostic_cv_std_accuracy'] * 100:.1f}%)"
+                )
             st.write(
-                "דיוק סביב 53-60% הוא ריאלי וצפוי לבעיה הזו - "
+                "דיוק סביב 53-58% הוא ריאלי וצפוי לבעיה הזו - "
                 "אין מודל שיכול לחזות מניות בוודאות גבוהה."
             )
