@@ -81,4 +81,8 @@ for ticker in watchlist:
             else:
                 st.caption("אין מספיק נתונים")
 
-        st.page_link("pages/1_Stock_Detail.py", label=f"➡️ פירוט מלא ל-{ticker}")
+        link_col1, link_col2 = st.columns(2)
+        with link_col1:
+            st.page_link("pages/1_Stock_Detail.py", label=f"➡️ פירוט מלא ל-{ticker}")
+        with link_col2:
+            st.page_link("pages/2_Trade_Plan.py", label=f"🎯 תוכנית מסחר ל-{ticker}")

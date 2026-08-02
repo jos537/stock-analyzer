@@ -55,6 +55,19 @@ def add_volume_trend(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def add_atr(df: pd.DataFrame, period: int = 14) -> pd.DataFrame:
+    """Average True Range - מודד תנודתיות, משמש לקביעת סטופ/יעד בתוכנית מסחר.
+    אותה שיטת החלקת Wilder כמו ב-RSI."""
+    prev_close = df["Close"].shift(1)
+    true_range = pd.concat([
+        df["High"] - df["Low"],
+        (df["High"] - prev_close).abs(),
+        (df["Low"] - prev_close).abs(),
+    ], axis=1).max(axis=1)
+    df["ATR14"] = true_range.ewm(alpha=1 / period, min_periods=period, adjust=False).mean()
+    return df
+
+
 def compute_all_indicators(df: pd.DataFrame) -> pd.DataFrame:
     """מקבל DataFrame עם עמודות OHLCV ומחזיר אותו עם כל האינדיקטורים מחושבים."""
     df = df.copy()
@@ -63,4 +76,5 @@ def compute_all_indicators(df: pd.DataFrame) -> pd.DataFrame:
     df = add_macd(df)
     df = add_bollinger_bands(df)
     df = add_volume_trend(df)
+    df = add_atr(df)
     return df

@@ -35,3 +35,30 @@ def get_history(ticker: str, period: str = HISTORY_PERIOD) -> pd.DataFrame | Non
         return hist
     except Exception:
         return None
+
+
+@st.cache_data(ttl=86400)  # יום - הסקטור של חברה כמעט לא משתנה
+def get_ticker_sector(ticker: str) -> str | None:
+    """שם הסקטור (GICS) של הטיקר, לשימוש במיפוי ל-ETF סקטוריאלי (config.SECTOR_ETF_MAP).
+    מחזיר None אם לא ידוע - לא מנחשים."""
+    try:
+        info = yf.Ticker(ticker).info
+        return info.get("sector")
+    except Exception:
+        return None
+
+
+@st.cache_data(ttl=86400)  # יום - תאריך דוח לא משתנה תכוף
+def get_next_earnings_date(ticker: str) -> pd.Timestamp | None:
+    """מועד הדוח הרבעוני הקרוב, אם ידוע. משתמש ב-get_earnings_dates ולא ב-
+    Ticker.calendar, שידוע כלא עקבי בין גרסאות yfinance. מחזיר None אם לא נמצא -
+    זה *לא* אומר "אין סיכון דוח", רק ש"לא ידוע" - חשוב להבדיל בתצוגה."""
+    try:
+        dates = yf.Ticker(ticker).get_earnings_dates(limit=8)
+        if dates is None or dates.empty:
+            return None
+        now = pd.Timestamp.now(tz=dates.index.tz)
+        future = dates[dates.index >= now]
+        return future.index.min() if not future.empty else None
+    except Exception:
+        return None
